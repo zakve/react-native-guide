@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPort": 19001,
+  "packagerPid": 2979,
+  "expoServerNgrokUrl": "https://jv-fdk.anonymous.react-native-guide.exp.direct",
+  "packagerNgrokUrl": "https://packager.jv-fdk.anonymous.react-native-guide.exp.direct",
+  "ngrokPid": 2994
 }
