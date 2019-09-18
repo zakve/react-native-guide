@@ -5,10 +5,11 @@ export default function App() {
   let pic = {
     uri: 'https://media.unisot.com/2018/08/38071612_1870705499639411_1924707641431425024_n.png'
   };
+
   return (
     <View style={styles.container}>
       <Image source={pic} style={{width: 267, height: 100}}/>
-      <Text>Hello Martin!</Text>
+      <Text style={styles.title}>Hello Martin!</Text>
     </View>
   );
 }
@@ -20,4 +21,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    color: '#002144',
+  }
 });
