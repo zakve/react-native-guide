@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import BaseInput from './components/BaseInput';
 
 export default function App() {
   let pic = {
@@ -8,8 +9,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Image source={pic} style={{width: 267, height: 100}}/>
+      <Image source={pic} style={{ width: 267, height: 100 }} />
       <Text style={styles.title}>Hello Martin!</Text>
+      <BaseInput />
     </View>
   );
 }
