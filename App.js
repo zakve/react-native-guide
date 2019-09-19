@@ -7,6 +7,18 @@ export default function App() {
     uri: 'https://media.unisot.com/2018/08/38071612_1870705499639411_1924707641431425024_n.png'
   };
 
+  async function getMoviesFromApi() {
+    try {
+      let response = await fetch(
+        'https://facebook.github.io/react-native/movies.json',
+      );
+      let responseJson = await response.json();
+      alert(responseJson.description);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Image source={pic} style={{ width: 267, height: 100 }} />
@@ -14,9 +26,9 @@ export default function App() {
       <BaseInput />
       <Button
         onPress={() => {
-          alert('You tapped the button!');
+          getMoviesFromApi();
         }}
-        title="Alert btn"
+        title="Async GET btn"
       />
     </View>
   );
