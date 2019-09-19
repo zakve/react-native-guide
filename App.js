@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import BaseInput from './components/BaseInput';
 
 export default function App() {
@@ -12,6 +12,12 @@ export default function App() {
       <Image source={pic} style={{ width: 267, height: 100 }} />
       <Text style={styles.title}>Hello Martin!</Text>
       <BaseInput />
+      <Button
+        onPress={() => {
+          alert('You tapped the button!');
+        }}
+        title="Alert btn"
+      />
     </View>
   );
 }
