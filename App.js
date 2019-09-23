@@ -4,8 +4,8 @@ import BaseInput from './components/BaseInput';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={styles.screen}>
+      <View style={styles.inputContainer}>
         <TextInput placeholder="Add task..." style={styles.input} />
         <Button title="Add" />
       </View>
@@ -14,11 +14,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     backgroundColor: '#fff',
     padding: 50,
   },
-  header: {
+  inputContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
