@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import BaseInput from './components/BaseInput';
 
 export default function App() {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: 'black',
     borderWidth: 1,
-    width: '80%',
+    flex: 1,
     paddingLeft: 10,
     paddingRight: 10
   }
