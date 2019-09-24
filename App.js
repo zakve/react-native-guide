@@ -7,13 +7,13 @@ export default function App() {
   const [task, setTask] = useState([]);
 
   const addTaskHandler = taskTile => {
-    setTask([...task, { key: Math.random().toString(), value: taskTile }])
+    setTask([...task, { id: Math.random().toString(), value: taskTile }])
   }
 
   return (
     <View style={styles.screen}>
       <TaskInput onAddTask={addTaskHandler} />
-      <FlatList data={task} renderItem={itemData => (
+      <FlatList keyExtractor={(item, index) => item.id} data={task} renderItem={itemData => (
         <TaskItem title={itemData.item.value} />
       )} />
     </View>
