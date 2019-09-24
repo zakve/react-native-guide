@@ -22,8 +22,12 @@ const TaskInput = props => {
                     value={enteredTask}
                 />
                 <View style={styles.buttonContainer}>
-                    <Button title="Cancel" color="red" onPress={props.onCancel} />
-                    <Button title="Add" onPress={addTaskHandler} />
+                    <View style={styles.button}>
+                        <Button title="Cancel" color="red" onPress={props.onCancel} />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title="Add" onPress={addTaskHandler} />
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -47,6 +51,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: "60%"
+    },
+    button: {
+        width: "40%"
     }
 })
 
