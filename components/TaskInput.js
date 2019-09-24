@@ -8,11 +8,23 @@ const TaskInput = props => {
         setEnteredTask(enteredTask)
     }
 
+    const addTaskHandler = () => {
+        props.onAddTask(enteredTask)
+    }
+
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.inputContainer}>
-                <TextInput placeholder="Add task..." style={styles.input} onChangeText={taskInputHandler} value={enteredTask} />
-                <Button title="Add" onPress={props.onAddTask.bind(this, enteredTask)} />
+                <TextInput
+                    placeholder="Add task..."
+                    style={styles.input}
+                    onChangeText={taskInputHandler}
+                    value={enteredTask}
+                />
+                <View style={styles.buttonContainer}>
+                    <Button title="Cancel" color="red" onPress={props.onCancel} />
+                    <Button title="Add" onPress={addTaskHandler} />
+                </View>
             </View>
         </Modal>
     )
@@ -30,6 +42,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         marginBottom: 10
+    },
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "60%"
     }
 })
 

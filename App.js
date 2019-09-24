@@ -18,13 +18,26 @@ export default function App() {
     })
   }
 
+  const cancelGoalAdditionHandler = () => {
+    setIsAddMode(false)
+  }
+
   return (
     <View style={styles.screen}>
       <Button title="Add new task" onPress={() => setIsAddMode(true)} />
-      <TaskInput visible={isAddMode} onAddTask={addTaskHandler} />
-      <FlatList keyExtractor={(item, index) => item.id} data={task} renderItem={itemData => (
-        <TaskItem title={itemData.item.value} id={itemData.item.id} onDelete={removeTaskHandler} />
-      )} />
+      <TaskInput
+        visible={isAddMode}
+        onAddTask={addTaskHandler}
+        onCancel={cancelGoalAdditionHandler} />
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={task}
+        renderItem={itemData => (
+          <TaskItem
+            title={itemData.item.value}
+            id={itemData.item.id}
+            onDelete={removeTaskHandler} />
+        )} />
     </View>
   );
 }
