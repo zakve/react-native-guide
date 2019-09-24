@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, ScrollView, FlatList } from 'react-native';
 import BaseInput from './components/BaseInput';
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
   }
 
   const addTaskHandler = () => {
-    setTask([...task, enteredTask])
+    setTask([...task, { key: Math.random().toString(), value: enteredTask }])
   }
 
   return (
@@ -20,12 +20,11 @@ export default function App() {
         <TextInput placeholder="Add task..." style={styles.input} onChangeText={taskInputHandler} value={enteredTask} />
         <Button title="Add" onPress={addTaskHandler} />
       </View>
-      <View>
-        {task.map((task) =>
-          <View key={task} style={styles.listItem}>
-            <Text key={task}>{task}</Text>
-          </View>)}
-      </View>
+      <FlatList data={task} renderItem={itemData => (
+        <View key={task} style={styles.listItem}>
+          <Text key={task}>{itemData.item.value}</Text>
+        </View>
+      )} />
     </View>
   );
 }
