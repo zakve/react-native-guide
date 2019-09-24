@@ -14,7 +14,7 @@ export default function App() {
     <View style={styles.screen}>
       <TaskInput onAddTask={addTaskHandler} />
       <FlatList keyExtractor={(item, index) => item.id} data={task} renderItem={itemData => (
-        <TaskItem title={itemData.item.value} />
+        <TaskItem title={itemData.item.value} onDelete={console.log('fdsf')} />
       )} />
     </View>
   );
