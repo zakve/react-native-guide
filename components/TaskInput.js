@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Modal } from 'react-native';
 
 const TaskInput = props => {
     const [enteredTask, setEnteredTask] = useState('');
@@ -9,24 +9,27 @@ const TaskInput = props => {
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput placeholder="Add task..." style={styles.input} onChangeText={taskInputHandler} value={enteredTask} />
-            <Button title="Add" onPress={props.onAddTask.bind(this, enteredTask)} />
-        </View>
+        <Modal visible={props.visible} animationType="slide">
+            <View style={styles.inputContainer}>
+                <TextInput placeholder="Add task..." style={styles.input} onChangeText={taskInputHandler} value={enteredTask} />
+                <Button title="Add" onPress={props.onAddTask.bind(this, enteredTask)} />
+            </View>
+        </Modal>
     )
 };
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: 'row',
+        flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
+        width: '80%',
         borderColor: 'black',
         borderWidth: 1,
-        flex: 1,
-        paddingLeft: 10,
-        paddingRight: 10
+        padding: 10,
+        marginBottom: 10
     }
 })
 
