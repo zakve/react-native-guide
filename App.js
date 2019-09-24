@@ -21,7 +21,10 @@ export default function App() {
         <Button title="Add" onPress={addTaskHandler} />
       </View>
       <View>
-        {task.map((task) => { return <Text key={task}>{task}</Text> })}
+        {task.map((task) =>
+          <View key={task} style={styles.listItem}>
+            <Text key={task}>{task}</Text>
+          </View>)}
       </View>
     </View>
   );
@@ -42,5 +45,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  listItem: {
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: '#ccc',
+    borderColor: 'black'
   }
 });
