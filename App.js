@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Button, FlatList } from 'react-native';
+import * as Notifications from 'expo-notifications'
 import TaskItem from './components/TaskItem';
 import TaskInput from './components/TaskInput';
 
@@ -22,9 +23,22 @@ export default function App() {
     setIsAddMode(false)
   }
 
+  const triggerNotificationHandler = () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "First local notification",
+        body: "This is the first local notification"
+      },
+      trigger: {
+        seconds: 5
+      }
+    });
+  }
+
   return (
     <View style={styles.screen}>
       <Button title="Add new task" onPress={() => setIsAddMode(true)} />
+      <Button title='Push local notification' onPress={triggerNotificationHandler} />
       <TaskInput
         visible={isAddMode}
         onAddTask={addTaskHandler}
