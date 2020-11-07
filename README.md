@@ -1,14 +1,20 @@
-# react-native-guide
-> Learning with React Native from scratch with Expo CLI.
+# react-native-todo-list
+Build React Native Expo TODO List
 
-## Installation
-https://facebook.github.io/react-native/docs/getting-started
+> **STACK**
+> - NEW: Expo Notifications
+> - Expo Permissions
 
-`npm install -g expo-cli`
+> **Features**
+> - Hooks
 
-`expo init AwesomeProject`
+## Demo
+...soon
 
-`cd AwesomeProject`
-
-`npm start`
-
+## Instalation
+*	**Clone and install packages**
+```
+git clone https://github.com/zakve/react-native-todo-list.git
+cd react-native-todo-list
+expo start
+```
