@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, FlatList } from 'react-native';
 import * as Notifications from 'expo-notifications'
+import * as Permissions from "expo-permissions";
 import TaskItem from './components/TaskItem';
 import TaskInput from './components/TaskInput';
 
 export default function App() {
   const [task, setTask] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false)
+
+  useEffect(() => {
+    Permissions.getAsync(Permissions.NOTIFICATIONS).then(statusObj => {
+      if (statusObj.status !== 'granted') {
+        return Permissions.askAsync(Permissions.NOTIFICATIONS);
+      }
+      return statusObj;
+    }).then((statusObj) => {
+      if (statusObj.status !== 'granted') {
+        return;
+      }
+    });
+  }, [])
 
   const addTaskHandler = taskTile => {
     setTask([...task, { id: Math.random().toString(), value: taskTile }]);
