@@ -11,7 +11,7 @@ Notifications.setNotificationHandler({
       shouldShowAlert: true
     }
   }
-})
+});
 
 export default function App() {
   const [task, setTask] = useState([]);
@@ -28,6 +28,16 @@ export default function App() {
         return;
       }
     });
+  }, [])
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(notification => {
+      console.log(notification)
+    })
+
+    return () => {
+      subscription.remove()
+    }
   }, [])
 
   const addTaskHandler = taskTile => {
