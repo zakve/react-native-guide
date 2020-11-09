@@ -5,6 +5,14 @@ import * as Permissions from "expo-permissions";
 import TaskItem from './components/TaskItem';
 import TaskInput from './components/TaskInput';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true
+    }
+  }
+})
+
 export default function App() {
   const [task, setTask] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false)
