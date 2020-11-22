@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Button, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { Button } from 'react-native-elements';
 import * as Notifications from 'expo-notifications'
 import * as Permissions from "expo-permissions";
+
+// Components
+import FloatingButton from "./components/FloatingButton";
 import TaskItem from './components/TaskItem';
 import TaskInput from './components/TaskInput';
 
@@ -71,39 +75,42 @@ export default function App() {
   }
 
   const triggerNotificationHandler = () => {
-    // Notifications.scheduleNotificationAsync({
-    //   content: {
-    //     title: "First local notification",
-    //     body: "This is the first local notification"
-    //   },
-    //   trigger: {
-    //     seconds: 5
-    //   }
-    // });
-    try {
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Accept-Encoding': 'gzip, deflate',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: pushToken,
-          data: { extraData: 'My Data' },
-          title: 'Sent via the app',
-          body: 'This push notification was setn via the app!'
-        })
-      })
-    } catch (error) {
-      console.log(`Push POST token failed ${error.message}`)
-      throw Error(error.message)
-    }
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "First local notification",
+        body: "This is the first local notification"
+      },
+      trigger: {
+        seconds: 5
+      }
+    });
+    // try {
+    //   fetch('https://exp.host/--/api/v2/push/send', {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Accept-Encoding': 'gzip, deflate',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       to: pushToken,
+    //       data: { extraData: 'My Data' },
+    //       title: 'Sent via the app',
+    //       body: 'This push notification was setn via the app!'
+    //     })
+    //   })
+    // } catch (error) {
+    //   console.log(`Push POST token failed ${error.message}`)
+    //   throw Error(error.message)
+    // }
   }
 
   return (
     <View style={styles.screen}>
-      <Button title="Add new task" onPress={() => setIsAddMode(true)} />
+      <FloatingButton
+        iconName='add'
+        onPress={() => { setIsAddMode(true) }}
+      />
       <Button title='Push local notification' onPress={triggerNotificationHandler} />
       <TaskInput
         visible={isAddMode}
@@ -124,6 +131,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
     backgroundColor: '#fff',
     padding: 50,
   }
