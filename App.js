@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginBottom: 15,
-    fontSize: 15
+    fontSize: 15,
+    color: Colors.grey
   }
 });
