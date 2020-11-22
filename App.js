@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { Button } from 'react-native-elements';
+import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
+import { ListItem, Button, Text, Icon } from "react-native-elements";
 import * as Notifications from 'expo-notifications'
 import * as Permissions from "expo-permissions";
 
@@ -8,6 +8,9 @@ import * as Permissions from "expo-permissions";
 import FloatingButton from "./components/FloatingButton";
 import TaskItem from './components/TaskItem';
 import TaskInput from './components/TaskInput';
+
+// Constants
+import Colors from "./constants/Colors";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -60,7 +63,7 @@ export default function App() {
   }, [])
 
   const addTaskHandler = taskTile => {
-    setTask([...task, { id: Math.random().toString(), value: taskTile }]);
+    setTask([...task, { id: Math.random().toString(), value: taskTile, done: false }]);
     setIsAddMode(false)
   }
 
@@ -68,6 +71,13 @@ export default function App() {
     setTask(currentTask => {
       return (currentTask.filter((task) => task.id !== taskId))
     })
+  }
+
+  const checkTask = taskId => {
+    console.log(taskId)
+    // setTask(currentTask => {
+    //   return (currentTask.find((task) => task.id !== taskId))
+    // })
   }
 
   const cancelGoalAdditionHandler = () => {
@@ -107,24 +117,44 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <FloatingButton
-        iconName='add'
-        onPress={() => { setIsAddMode(true) }}
-      />
-      <Button title='Push local notification' onPress={triggerNotificationHandler} />
-      <TaskInput
-        visible={isAddMode}
-        onAddTask={addTaskHandler}
-        onCancel={cancelGoalAdditionHandler} />
-      <FlatList
-        keyExtractor={(item, index) => item.id}
-        data={task}
-        renderItem={itemData => (
-          <TaskItem
-            title={itemData.item.value}
-            id={itemData.item.id}
-            onDelete={removeTaskHandler} />
-        )} />
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <Text style={styles.title}>What's up, Martin</Text>
+          <Text style={styles.subtitle}>Your tasks</Text>
+
+          <TaskInput
+            visible={isAddMode}
+            onAddTask={addTaskHandler}
+            onCancel={cancelGoalAdditionHandler} />
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={task}
+            renderItem={itemData => (
+              <ListItem
+                key={itemData.item.id}
+                id={itemData.item.id}
+                onPress={() => removeTaskHandler(itemData.item.id)}
+                containerStyle={{ paddingLeft: 22 }}
+                bottomDivider>
+                <ListItem.CheckBox
+                  checked={false}
+                  onPress={() => checkTask(itemData.item.id)}
+                />
+                <ListItem.Content>
+                  <ListItem.Title>{itemData.item.value}</ListItem.Title>
+                </ListItem.Content>
+                <Icon
+                  name='notifications'
+                  onPress={() => { console.log('remind') }}
+                />
+              </ListItem>
+            )} />
+          <FloatingButton
+            iconName='add'
+            onPress={() => setIsAddMode(true)}
+          />
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
@@ -132,7 +162,23 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 50,
+    backgroundColor: Colors.greyBg
+  },
+  safeArea: {
+    flex: 1,
+    padding: 20
+  },
+  container: {
+    padding: 20,
+    flex: 1
+  },
+  title: {
+    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: "bold"
+  },
+  subtitle: {
+    marginBottom: 15,
+    fontSize: 15
   }
 });
