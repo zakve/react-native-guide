@@ -73,11 +73,20 @@ export default function App() {
     })
   }
 
-  const checkTask = taskId => {
-    console.log(taskId)
-    // setTask(currentTask => {
-    //   return (currentTask.find((task) => task.id !== taskId))
-    // })
+  const checkTask = async taskId => {
+    let newTasks = [...task]
+    newTasks.map(task => {
+      if (task.id === taskId) {
+        task.done = true
+      }
+    })
+    setTask(prevState => ({
+      task: {
+        ...prevState.task,
+        task: newTasks
+      }
+    })
+    )
   }
 
   const cancelGoalAdditionHandler = () => {
@@ -133,8 +142,7 @@ export default function App() {
               <ListItem
                 key={itemData.item.id}
                 id={itemData.item.id}
-                onPress={() => removeTaskHandler(itemData.item.id)}
-                containerStyle={{ paddingLeft: 22 }}
+                //onPress={() => removeTaskHandler(itemData.item.id)}
                 bottomDivider>
                 <ListItem.CheckBox
                   checked={false}
