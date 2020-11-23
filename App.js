@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import { ListItem, Button, Text, Icon } from "react-native-elements";
 import * as Notifications from 'expo-notifications'
@@ -21,10 +21,12 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-  const [task, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false)
   const [pushToken, setPushToken] = useState()
+  const [refreshing, setRefreshing] = useState(false)
 
+  // Ask for notification permissions
   useEffect(() => {
     Permissions.getAsync(Permissions.NOTIFICATIONS).then(statusObj => {
       if (statusObj.status !== 'granted') {
@@ -47,6 +49,7 @@ export default function App() {
     })
   }, [])
 
+  // notification handler
   useEffect(() => {
     const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response)
@@ -63,30 +66,14 @@ export default function App() {
   }, [])
 
   const addTaskHandler = taskTile => {
-    setTask([...task, { id: Math.random().toString(), value: taskTile, done: false }]);
+    setTasks([...tasks, { id: Math.random().toString(), value: taskTile, done: false }]);
     setIsAddMode(false)
   }
 
-  const removeTaskHandler = taskId => {
-    setTask(currentTask => {
+  const checkTask = taskId => {
+    setTasks(currentTask => {
       return (currentTask.filter((task) => task.id !== taskId))
     })
-  }
-
-  const checkTask = async taskId => {
-    let newTasks = [...task]
-    newTasks.map(task => {
-      if (task.id === taskId) {
-        task.done = true
-      }
-    })
-    setTask(prevState => ({
-      task: {
-        ...prevState.task,
-        task: newTasks
-      }
-    })
-    )
   }
 
   const cancelGoalAdditionHandler = () => {
@@ -124,6 +111,12 @@ export default function App() {
     // }
   }
 
+  const onRefresh = useCallback(() => {
+  }, [refreshing]);
+
+  const flatlistOnEndReached = () => {
+  }
+
   return (
     <View style={styles.screen}>
       <SafeAreaView style={styles.safeArea}>
@@ -135,28 +128,30 @@ export default function App() {
             visible={isAddMode}
             onAddTask={addTaskHandler}
             onCancel={cancelGoalAdditionHandler} />
+
           <FlatList
-            keyExtractor={(item, index) => item.id}
-            data={task}
-            renderItem={itemData => (
+            data={tasks}
+            renderItem={({ item }) => (
               <ListItem
-                key={itemData.item.id}
-                id={itemData.item.id}
-                //onPress={() => removeTaskHandler(itemData.item.id)}
+                key={item.id}
+                id={item.id}
+                onPress={() => checkTask(item.id)}
                 bottomDivider>
                 <ListItem.CheckBox
                   checked={false}
-                  onPress={() => checkTask(itemData.item.id)}
+                  onPress={() => checkTask(item.id)}
                 />
                 <ListItem.Content>
-                  <ListItem.Title>{itemData.item.value}</ListItem.Title>
+                  <ListItem.Title>{item.value}</ListItem.Title>
                 </ListItem.Content>
                 <Icon
                   name='notifications'
                   onPress={() => { console.log('remind') }}
                 />
               </ListItem>
-            )} />
+            )}
+          />
+
           <FloatingButton
             iconName='add'
             onPress={() => setIsAddMode(true)}
